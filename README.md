@@ -1,10 +1,10 @@
-# Windows 10 Privacy Guide - Creators Update
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella.jpg)
+# Windows 10 Privacy Guide - Fall Creators Update
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1709.jpg)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data). Most of it seems pretty legit stuff, but still, if you don't trust them, here's how to prevent Windows 10 from sending all your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: July 25, 2017
+Last update: October 12, 2017
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -50,6 +50,10 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v SubmitSamp
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v DontReportInfectionInformation /t REG_DWORD /d 1 /f
 reg delete "HKLM\SYSTEM\CurrentControlSet\Services\Sense" /f
 reg delete "HKLM\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run" /v "SecurityHealth" /f
 install_wim_tweak /o /c Windows-Defender /r
 ```
 This will take 1-2 minutes. After that, reboot and reopen our command prompt and PowerShell.  
@@ -63,11 +67,16 @@ In the PowerShell, type:
 ```
 Get-AppxPackage -AllUsers *store* | Remove-AppxPackage
 ```
+You can ignore any error that pops up.  
 In the command prompt, type:
 ```
 install_wim_tweak /o /c Microsoft-Windows-ContentDeliveryManager /r
+install_wim_tweak /o /c Microsoft-Windows-Store /r
 reg add "HKLM\Software\Policies\Microsoft\WindowsStore" /v RemoveWindowsStore /t REG_DWORD /d 1 /f
 reg add "HKLM\Software\Policies\Microsoft\WindowsStore" /v DisableStoreApps /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /v "EnableWebContentEvaluation" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\PushToInstall" /v DisablePushToInstall /t REG_DWORD /d 1 /f
+sc delete PushToInstall
 ```
 
 ### Music, TV, ...
@@ -87,16 +96,15 @@ Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
 You can ignore any error that pops up.  
 In the command prompt, type:
 ```
-install_wim_tweak /o /c Microsoft-Xbox-GameCallableUI /r
 sc delete XblAuthManager
 sc delete XblGameSave
 sc delete XboxNetApiSvc
 sc delete XboxGipSvc
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\xbgm" /f
 schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /disable
 schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTaskLogon" /disable
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /t REG_DWORD /d 0 /f
 ```
-To remove Game DVR (the Win+G thing that pops up while you're playing), download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/Remove_GamePanel.zip), extract it somewhere and run "Remove GamePanel.bat" as administrator.  
-__Warning__: Some updates will partially restore Game DVR causing errors to pop up when a game is started. If that happens, simply reapply the fix.  
 Additionally, go to Start > Settings > Gaming and turn off everything.
 
 ### Sticky Notes
@@ -123,6 +131,7 @@ In the PowerShell, type:
 Get-AppxPackage -AllUsers *alarms* | Remove-AppxPackage
 Get-AppxPackage -AllUsers *people* | Remove-AppxPackage
 ```
+You can ignore any error that pops up.
 
 ### Mail, Calendar, ...
 In the PowerShell, type:
@@ -187,6 +196,8 @@ Get-AppxPackage -AllUsers *paint* | Remove-AppxPackage
 ```
 In the command prompt, type:
 ```
+for /f "tokens=1* delims=" %I in ('reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Edit" ^| find /i "3D Edit"') do (reg delete "%I" /f )
+for /f "tokens=1* delims=" %I in ('reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Print" ^| find /i "3D Print"') do (reg delete "%I" /f )
 pushd "C:\Program Files"
 takeown /f WindowsApps /r /d y
 icacls WindowsApps /reset /T
@@ -211,7 +222,11 @@ In the command prompt, type:
 ```
 install_wim_tweak /o /c Microsoft-Windows-ContactSupport /r
 ```
-Additionally, Go to Start > Settings > Apps > Manage optional features, and remove Contact Support.
+In the PowerShell, type:
+```
+Get-AppxPackage *GetHelp* | Remove-AppxPackage
+```
+Additionally, Go to Start > Settings > Apps > Manage optional features, and remove Contact Support (if present).
 
 ### Microsoft Quick Assist
 Go to Start > Settings > Apps > Manage optional features, and remove Microsoft Quick Assist
@@ -234,7 +249,8 @@ Open our command prompt again and use this command:
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules"  /v "{2765E0F4-2918-4A46-B9C9-43CDD8FCBA2B}" /t REG_SZ /d  "BlockCortana|Action=Block|Active=TRUE|Dir=Out|App=C:\windows\systemapps\microsoft.windows.cortana_cw5n1h2txyewy\searchui.exe|Name=Search  and Cortana  application|AppPkgId=S-1-15-2-1861897761-1695161497-2927542615-642690995-327840285-2659745135-2630312742|" /f
 ```
-Reboot again and Cortana is gone. The icon is still there, but it will open the regular search instead.
+Reboot again and Cortana is gone. The icon is still there, but it will open the regular search instead.  
+__Note__: Windows may say that Indexing is not running, but it will start running again after a few minutes.
 
 ## More tweaking
 Open the command prompt again.
@@ -304,51 +320,49 @@ rd "%LOCALAPPDATA%\Microsoft\OneDrive" /Q /S
 rd "%PROGRAMDATA%\Microsoft OneDrive" /Q /S
 reg delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
 reg delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
+del /Q /F "%localappdata%\Microsoft\OneDrive\OneDriveStandaloneUpdater.exe" 
 ```
 Don't worry if some of these commands fail, it is normal if you never used OneDrive.  
 Reboot once again, and reopen the command prompt for the next step.
 
 ## Removing Telemetry and other unnecessary services
-First, click start, type "Services" and open it. You will find a huge list of Windows Services, most of which are fine and safe, but others send data to Microsoft.  
-Find a service called Contact Data_xxxxx or CDPUserSvc_xxxxx, where xxxxx are 5 randomly generated characters (yes, Windows is using literal malware techniques to prevent automated removal of this trash).
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/serv1703.jpg)
-Write down these 5 characters.
-
-Now type these commands in the command prompt to delete them:
+In the command prompt type the following commands:
 ```
 sc delete DiagTrack
 sc delete dmwappushservice
 sc delete WerSvc
 sc delete CDPUserSvc
-sc delete CDPUserSvc_xxxxx
 sc delete OneSyncSvc
-sc delete OneSyncSvc_xxxxx
 sc delete MessagingService
-sc delete MessagingService_xxxxx
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "CDPUserSvc" ^| find /i "CDPUserSvc"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "OneSyncSvc" ^| find /i "OneSyncSvc"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "MessagingService" ^| find /i "MessagingService"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "PimIndexMaintenanceSvc" ^| find /i "PimIndexMaintenanceSvc"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "UserDataSvc" ^| find /i "UserDataSvc"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "UnistoreSvc" ^| find /i "UnistoreSvc"') do (reg delete %I /f)
 sc delete diagnosticshub.standardcollector.service
 reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules\" /v "NumberOfSIUFInPeriod" /t REG_DWORD /d 0 /f
 reg delete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules" /v "PeriodInNanoSeconds" /f
 reg add "HKLM\SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v Start /t REG_DWORD /d 0 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v AITEnable /t REG_DWORD /d 0 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v DisableInventory /t REG_DWORD /d 1 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v DisablePCA /t REG_DWORD /d 1 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v DisableUAR /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter" /v "EnabledV9" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableSmartScreen" /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Internet Explorer\PhishingFilter" /v "EnabledV9" /t REG_DWORD /d 0 /f
 ```
 Press Win+R, type regedit, press enter, and navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services.  
-Here we need to delete the following keys:
-* PimIndexMaintenanceSvc
-* PimIndexMaintenanceSvc_xxxxx
-* DPS
-* UserDataSvc
-* UserDataSvc_xxxxx
-* UnistoreSvc
-* UnistoreSvc_xxxxx
-* xbgm (If you removed the Xbox stuff)
-
-Some of those keys are "protected" by messed up permissions. To delete them, you must fix them, here's a video showing how to do it:
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/delkey.gif)
+Here we need to locate the key called DPS.  
+This key is "protected" by messed up permissions. To delete it, you must fix them, here's a video showing how to do it:  
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/delkey.gif)  
 Right click the key and select Permissions, then click Advanced, change the Owner to your username, check "Replace owner on subcontainers and objects" and "Replace all child object permission entries with inheritable permission entries from this object", if inheritance is enabled, disable it and convert to explicit permissions, apply, remove all the permission entries and add one for your username with Full control, confirm everything and delete the key.
 
 Reboot!
 
 Last but not least, we also need to remove Microsoft Compatibility Telemetry. This process does more than spying on you, it's also a resource hog when it's running, especially if you don't have an SSD.  
-To remove it, download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/Remove_CompatTel.zip), extract it somewhere and run "Remove_CompatTel.bat" as administrator.
+To remove it, download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/Remove_CompatTel.zip), extract it somewhere and run "Remove_CompatTel.bat" as administrator.  
+This tool replaces it with an empty program.
 
 ## Scheduled tasks
 Windows 10 has a huge amount of scheduled tasks that may report some data. Type these commands in the command prompt to remove them:
@@ -375,6 +389,10 @@ schtasks /Change /TN "Microsoft\Windows\Shell\FamilySafetyMonitor" /disable
 schtasks /Change /TN "Microsoft\Windows\Shell\FamilySafetyRefresh" /disable
 schtasks /Change /TN "Microsoft\Windows\Shell\FamilySafetyUpload" /disable
 schtasks /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /disable
+schtasks /Change /TN "Microsoft\Windows\WindowsUpdate\Automatic App Update" /disable
+schtasks /Change /TN "Microsoft\Windows\License Manager\TempSignedLicenseExchange" /Disable
+schtasks /Change /TN "Microsoft\Windows\WindowsUpdate\Automatic App Update" /Disable
+schtasks /Change /TN "Microsoft\Windows\Clip\License Validation" /Disable
 ```
 Some of these may not exist, it's fine.
 
@@ -390,8 +408,14 @@ Go back to Settings and go to System > Notifications and actions:
 * Set Show me the Windows welcome... to off
  
 Go back to Settings and go to Privacy:
-* Under General, set Let Windows track app launches... to off
+* Under General, turn off everything
 * Under App diagnostics, set Let apps access diagnostic information to off
+
+Go back to Settings and go to Search:
+* Under Permissions & History, turn off everything
+
+On the taskbar:
+* Right click the people icon and uncheck "Show People button"
 
 ## Protect your wifi network from your friends!
 If you give your Wifi password to a friend who has Wifi Sensor turned on (it was turned on by default in the previous versions of Windows 10), it will share your password with his Skype, Outlook, ... contacts, which means your Wifi password will be sent to Microsoft.  
@@ -406,12 +430,12 @@ A big limitation of Tinywall, if you decide to use it, is that you cannot allow/
 
 ## Congratulations! Your copy of Windows is now Debotnetted!
 Things will change in the future, and I'll do what I can to keep this guide updated.
-As of May 2017, this guide works on Windows 10 Pro.
+As of September 2017, this guide works on Windows 10 Pro.
 
 ## Can Windows revert these changes?
 There are a few things that can revert the changes we made here:
 * __Major updates__:  when a major update is installed it's like reinstalling Windows. It keeps your programs and settings but the system is reinstalled, and all the botnet with it. Major updates usually come out every 8-12 months. I will keep the guide updated every time a new major update comes out.
-* __Some minor updates__: some updates will update Game DVR, as well as the Microsoft Compatibility Telemetry, thus reinstalling them if you removed them, so you will have to remove them again. These updates usually come out every 2 months and are the ones that take a long time to download and install. Nothing else will not be restored.
-* __Using ``sfc /scannow``__:  this command checks system files for integrity. If you run it, it will reinstall Game DVR and Microsoft Compatibility Telemetry.
+* __Some minor updates__: some updates update the Microsoft Compatibility Telemetry, so you will have to remove it again. These updates usually come out every 2 months and are the ones that take a long time to download and install. Nothing else will not be restored.
+* __Using ``sfc /scannow``__:  this command checks system files for integrity. If you run it, it will reinstall Microsoft Compatibility Telemetry.
 * __Using ``dism /Online /Cleanup-Image /RestoreHealth``__:  if you run this command, it will revert almost all changes
 * __Using System Restore__:  if you go back to before the changes were made, it will revert changes
