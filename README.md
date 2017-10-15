@@ -4,7 +4,7 @@
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data). Most of it seems pretty legit stuff, but still, if you don't trust them, here's how to prevent Windows 10 from sending all your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: October 12, 2017
+Last update: October 15, 2017
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -55,11 +55,15 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run" /v "SecurityHealth" /f
 install_wim_tweak /o /c Windows-Defender /r
+pushd "C:\Windows\SystemApps"
+takeown /f Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /r /d y
+icacls Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /reset /T
+icacls Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /grant Everyone:(F) /t /c /q
+rmdir /s /q Microsoft.Windows.SecHealthUI_cw5n1h2txyewy
 ```
 This will take 1-2 minutes. After that, reboot and reopen our command prompt and PowerShell.  
 Windows will keep reminding us that the system is unprotected. Click Start, type Control Panel and open it, go to System and Security > Security and Maintenance, and turn off messages about virus protection.
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1703_1.jpg)
-Unfortunately, the Windows Defender icon is still present in the start menu, although it does nothing. I have yet to find a way to remove it without breaking functionality.
 
 ## Removing features
 ### Windows Store
