@@ -209,7 +209,7 @@ icacls WindowsApps /grant Everyone:(F) /t /c /q
 cd WindowsApps
 for /f %f in ('dir /b Microsoft.MSPaint*') do takeown /f %f /r /d y && rmdir /s /q %f
 ```
-__Important__: if takeown complains about "y" not being a valid option, replace it with whatever is short for yes in your language. This is not a problem if you're not using Windows in English.
+__Important__: if takeown complains about "y" not being a valid option, replace it with whatever is short for yes in your language. This is only a problem if you're not using Windows in English.
 
 ### Microsoft Edge (not recommended)
 In the command prompt, type:
@@ -345,7 +345,7 @@ for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k 
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "UserDataSvc" ^| find /i "UserDataSvc"') do (reg delete %I /f)
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "UnistoreSvc" ^| find /i "UnistoreSvc"') do (reg delete %I /f)
 sc delete diagnosticshub.standardcollector.service
-reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules\" /v "NumberOfSIUFInPeriod" /t REG_DWORD /d 0 /f
+reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules" /v "NumberOfSIUFInPeriod" /t REG_DWORD /d 0 /f
 reg delete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules" /v "PeriodInNanoSeconds" /f
 reg add "HKLM\SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v Start /t REG_DWORD /d 0 /f
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v AITEnable /t REG_DWORD /d 0 /f
