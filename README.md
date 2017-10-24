@@ -4,7 +4,7 @@
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data). Most of it seems pretty legit stuff, but still, if you don't trust them, here's how to prevent Windows 10 from sending all your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: October 15, 2017
+Last update: October 24, 2017
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -355,6 +355,7 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v Di
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter" /v "EnabledV9" /t REG_DWORD /d 0 /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableSmartScreen" /t REG_DWORD /d 0 /f
 reg add "HKCU\Software\Microsoft\Internet Explorer\PhishingFilter" /v "EnabledV9" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Option\CompatTelRunner.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 ```
 Press Win+R, type regedit, press enter, and navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services.  
 Here we need to locate the key called DPS.  
@@ -363,10 +364,6 @@ This key is "protected" by messed up permissions. To delete it, you must fix the
 Right click the key and select Permissions, then click Advanced, change the Owner to your username, check "Replace owner on subcontainers and objects" and "Replace all child object permission entries with inheritable permission entries from this object", if inheritance is enabled, disable it and convert to explicit permissions, apply, remove all the permission entries and add one for your username with Full control, confirm everything and delete the key.
 
 Reboot!
-
-Last but not least, we also need to remove Microsoft Compatibility Telemetry. This process does more than spying on you, it's also a resource hog when it's running, especially if you don't have an SSD.  
-To remove it, download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/Remove_CompatTel.zip), extract it somewhere and run "Remove_CompatTel.bat" as administrator.  
-This tool replaces it with an empty program.
 
 ## Scheduled tasks
 Windows 10 has a huge amount of scheduled tasks that may report some data. Type these commands in the command prompt to remove them:
