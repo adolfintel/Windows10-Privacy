@@ -436,7 +436,5 @@ As of September 2017, this guide works on Windows 10 Pro.
 ## Can Windows revert these changes?
 There are a few things that can revert the changes we made here:
 * __Major updates__:  when a major update is installed it's like reinstalling Windows. It keeps your programs and settings but the system is reinstalled, and all the botnet with it. Major updates usually come out every 8-12 months. I will keep the guide updated every time a new major update comes out.
-* __Some minor updates__: some updates update the Microsoft Compatibility Telemetry, so you will have to remove it again. These updates usually come out every 2 months and are the ones that take a long time to download and install. Nothing else will not be restored.
-* __Using ``sfc /scannow``__:  this command checks system files for integrity. If you run it, it will reinstall Microsoft Compatibility Telemetry.
 * __Using ``dism /Online /Cleanup-Image /RestoreHealth``__:  if you run this command, it will revert almost all changes
 * __Using System Restore__:  if you go back to before the changes were made, it will revert changes
