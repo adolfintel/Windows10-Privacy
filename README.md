@@ -18,12 +18,12 @@ If you already installed Windows with the default settings, go to Start > Settin
 ## Let it download all the updates
 Once you get to the desktop, go to Settings > Updates and security, and let it download all the updates. Reboot and repeat until no more updates are available.  
 This is important because Windows Update may interfere with our activities.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_1.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_1.jpg)  
 Now open the Store app, and let it download updates too.  
 Again, this is important because updates would interfere with our activities.  
 This may take some time, and it may even get stuck. If it happens, reboot and try again.
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_3.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_3.jpg)  
 Make sure you check for updates several times, because we absolutely don't want it to try and download stuff while we're removing it.
 
 Now that the system is fully updated, make sure Windows is activated with your license (or KMSPico).
@@ -66,8 +66,8 @@ rmdir /s /q Microsoft.Windows.SecHealthUI_cw5n1h2txyewy
 ```
 This will take 1-2 minutes.  
 Now, go to Start and right click Windows Defender Security Center, select More > App settings, and click Reset. This will remove the icon from the start menu.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_3.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_2.jpg)  
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_3.jpg)  
 
 After a while, Windows will remind us that the system is unprotected. When it does, click Start, type Control Panel, open it, go to System and Security > Security and Maintenance, and turn off messages about virus protection.
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1703_1.jpg)
