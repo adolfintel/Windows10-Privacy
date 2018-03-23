@@ -383,7 +383,7 @@ reg add "HKCU\Software\Microsoft\Internet Explorer\PhishingFilter" /v "EnabledV9
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\CompatTelRunner.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 ```
 Press Win+R, type regedit, press enter, and navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services.  
-Here we need to locate the key following keys:
+Here we need to locate the following keys:
 * DPS
 * WdiServiceHost
 * WdiSystemHost
