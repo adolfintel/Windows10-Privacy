@@ -4,7 +4,7 @@
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: April 3, 2018
+Last update: May 5, 2018
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -321,7 +321,7 @@ If you're on 64-bit Windows, type
 ```
 "%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe" /uninstall
 ```
-Now reboot, and reopen the command prompt and type:
+In the command prompt type:
 ```
 rd "%USERPROFILE%\OneDrive" /Q /S
 rd "C:\OneDriveTemp" /Q /S
@@ -332,7 +332,6 @@ reg delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2E
 del /Q /F "%localappdata%\Microsoft\OneDrive\OneDriveStandaloneUpdater.exe" 
 ```
 Don't worry if some of these commands fail, it is normal if you never used OneDrive.  
-Reboot once again, and reopen the command prompt for the next step.
 
 ## Removing Telemetry and other unnecessary services
 In the command prompt type the following commands:
