@@ -1,4 +1,6 @@
-# Windows 10 Privacy Guide - Spring Creators Update
+# Windows 10 Privacy Guide - Spring Creators Update v1803
+
+N.B. **For Windows10 v1709** visit [here](https://fdossena.com/?p=w10debotnet/index_1709.frag)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
