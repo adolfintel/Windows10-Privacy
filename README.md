@@ -4,7 +4,7 @@
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: May 16, 2018
+Last update: May 19, 2018
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -69,8 +69,8 @@ Now, go to Start and right click Windows Defender Security Center, select More >
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_2.jpg)  
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_3.jpg)  
 
-After a while, Windows will remind us that the system is unprotected. When it does, click Start, type Control Panel, open it, go to System and Security > Security and Maintenance, and turn off messages about virus protection.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1703_1.jpg)
+After a while, Windows will remind us that the system is unprotected. When it does, right click the notification and hide it.
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_1.jpg)
 
 ## Removing features
 We will now remove almost all UWP features in Windows. The only UWP app you'll have left will be the settings app.  
