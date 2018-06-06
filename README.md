@@ -250,6 +250,17 @@ In the command prompt, type:
 install_wim_tweak /o /c Microsoft-PPIProjection-Package /r
 ```
 
+### System Restore
+In the PowerShell, type:
+```
+Disable-ComputerRestore -Drive "C:\"
+vssadmin delete shadows /all /Quiet
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableConfig" /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableConfig" /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
+```
+
 ### Reboot!
 Reboot the system and you're now free of UWP garbage.
 
