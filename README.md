@@ -4,7 +4,7 @@
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: May 19, 2018
+Last update: June 6, 2018
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -345,7 +345,7 @@ sc delete MessagingService
 sc delete wercplsupport
 sc delete PcaSvc
 sc delete InstallService
-sc delete wlidsvc
+sc config wlidsvc start=demand
 sc delete wisvc
 sc delete RetailDemo
 sc delete diagsvc
@@ -463,7 +463,7 @@ Unlike TinyWall however, this firewall can block individual UWP apps, which is a
 
 ## Congratulations! Your copy of Windows is now Debotnetted!
 Things will change in the future, and I'll do what I can to keep this guide updated.
-As of May 2018, this guide works on Windows 10 Pro.
+As of June 2018, this guide works on Windows 10 Pro.
 
 ## Can Windows revert these changes?
 There are a few things that can revert the changes we made here:
