@@ -1,5 +1,6 @@
-# Windows 10 Privacy Guide - Spring Creators Update
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1803.jpg)
+# Windows 10 Privacy Guide - Spring Creators Update v1803
+
+N.B. **For Windows10 v1709** visit [here](https://fdossena.com/?p=w10debotnet/index_1709.frag)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
@@ -30,10 +31,10 @@ Now that the system is fully updated, make sure Windows is activated with your l
 
 ## Remove everything you can
 Open the start menu and remove all the applications. Some of them, such as Microsoft Edge, will not have an uninstall option; we'll remove them later.  
-What's important now is to remove all the OEM software and the shitty games like Candy Crush and Minecraft.
+What's important now is to remove all the OEM software and the games like Candy Crush and Minecraft.
 
 ## Tools
-* You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/install_wim_tweak.zip) and extract it to C:\Windows\System32
+* You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/abhijithvijayan/Windows10-Privacy/master/data/install_wim_tweak.zip) and extract it to C:\Windows\System32
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/iwt_extr.jpg)  
 This is a very handy tool that allows us to remove Windows components with a single command. You can delete it from System32 when you're finished with this guide.  
 * We need a command prompt, so click start, type ``cmd`` and run it as administrator
