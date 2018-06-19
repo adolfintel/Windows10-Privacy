@@ -5,7 +5,7 @@ N.B. **For Windows10 v1709** visit [here](https://fdossena.com/?p=w10debotnet/in
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
 Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: May 16, 2018
+Last update: June 16, 2018
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
@@ -58,20 +58,14 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformatio
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run" /v "SecurityHealth" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\SecHealthUI.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 install_wim_tweak /o /c Windows-Defender /r
-pushd "C:\Windows\SystemApps"
-takeown /f Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /r /d y
-icacls Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /reset /T
-icacls Microsoft.Windows.SecHealthUI_cw5n1h2txyewy /grant Everyone:(F) /t /c /q
-rmdir /s /q Microsoft.Windows.SecHealthUI_cw5n1h2txyewy
 ```
 This will take 1-2 minutes.  
-Now, go to Start and right click Windows Defender Security Center, select More > App settings, and click Reset. This will remove the icon from the start menu.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_2.jpg)  
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_3.jpg)  
+Unfortunately, since June 2018, Windows Defender Security Center can no longer be removed without breaking the system.
 
-After a while, Windows will remind us that the system is unprotected. When it does, click Start, type Control Panel, open it, go to System and Security > Security and Maintenance, and turn off messages about virus protection.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1703_1.jpg)
+After a while, Windows will remind us that the system is unprotected. When it does, right click the notification and hide it.
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_1.jpg)
 
 ## Removing features
 We will now remove almost all UWP features in Windows. The only UWP app you'll have left will be the settings app.  
@@ -251,6 +245,17 @@ In the command prompt, type:
 install_wim_tweak /o /c Microsoft-PPIProjection-Package /r
 ```
 
+### System Restore
+In the PowerShell, type:
+```
+Disable-ComputerRestore -Drive "C:\"
+vssadmin delete shadows /all /Quiet
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableConfig" /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableConfig" /t "REG_DWORD" /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
+```
+
 ### Reboot!
 Reboot the system and you're now free of UWP garbage.
 
@@ -346,7 +351,7 @@ sc delete MessagingService
 sc delete wercplsupport
 sc delete PcaSvc
 sc delete InstallService
-sc delete wlidsvc
+sc config wlidsvc start=demand
 sc delete wisvc
 sc delete RetailDemo
 sc delete diagsvc
@@ -464,7 +469,7 @@ Unlike TinyWall however, this firewall can block individual UWP apps, which is a
 
 ## Congratulations! Your copy of Windows is now Debotnetted!
 Things will change in the future, and I'll do what I can to keep this guide updated.
-As of May 2018, this guide works on Windows 10 Pro.
+As of June 2018, this guide works on Windows 10 Pro.
 
 ## Can Windows revert these changes?
 There are a few things that can revert the changes we made here:
