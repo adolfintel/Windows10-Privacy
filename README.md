@@ -1,30 +1,32 @@
-# Windows 10 Privacy Guide - Spring Creators Update
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1803.jpg)
+# Windows 10 Privacy Guide - October 2018 Update
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1809.jpg)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
-Please note that not all of these changes can be reverted. If you mess up, you'll have to reinstall Windows.  
-Last update: June 16, 2018
+Last update: September 26, 2018
+
+__Important:__ If you decide to follow this guide, you will not be able to use your Microsoft account, or the Windows Store. These steps cannot be reverted without reinstalling Windows! Do this at your own risk.
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1703_1.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1703_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1703_3.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1703_4.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1803_coll.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_1.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_2.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_3.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_4.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_5.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_coll.jpg)
 If you already installed Windows with the default settings, go to Start > Settings > Privacy to turn them off. You should also go to Account and disconnect your Microsoft account because this guide will prevent it from working properly.
 
 ## Let it download all the updates
 Once you get to the desktop, go to Settings > Updates and security, and let it download all the updates. Reboot and repeat until no more updates are available.  
 This is important because Windows Update may interfere with our activities.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_1.jpg)  
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_1.jpg)  
 Now open the Store app, and let it download updates too.  
 Again, this is important because updates would interfere with our activities.  
-This may take some time, and it may even get stuck. If it happens, reboot and try again.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1803_3.jpg)  
-Make sure you check for updates several times, because we absolutely don't want it to try and download stuff while we're removing it.
+This may take some time. 
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_2.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_3.jpg)  
+Make sure you check for updates several times, because we absolutely don't want it to download stuff while we're removing it.
 
 Now that the system is fully updated, make sure Windows is activated with your license (or KMSPico).
 
@@ -33,13 +35,13 @@ Open the start menu and remove all the applications. Some of them, such as Micro
 What's important now is to remove all the OEM software and the shitty games like Candy Crush and Minecraft.
 
 ## Tools
-* You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/install_wim_tweak.zip) and extract it to C:\Windows\System32
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/iwt_extr.jpg)  
+* You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/install_wim_tweak.zip), extract it to your Desktop, then move it to C:\Windows\System32
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/iwt1809_extr.jpg)  
 This is a very handy tool that allows us to remove Windows components with a single command. You can delete it from System32 when you're finished with this guide.  
 * We need a command prompt, so click start, type ``cmd`` and run it as administrator
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/cmd_1.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/cmd1809_1.jpg)
 * We will also need PowerShell, so click start, type ``PowerShell`` and run it as administrator
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/ps_1.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/ps1809_1.jpg)
 
 ## Removing Windows Defender
 In the command prompt, type the following commands:
@@ -61,7 +63,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution 
 install_wim_tweak /o /c Windows-Defender /r
 ```
 This will take 1-2 minutes.  
-Unfortunately, since June 2018, Windows Defender Security Center can no longer be removed without breaking the system.
+Unfortunately, since June 2018, the Windows Security icon in the Start menu can no longer be removed without breaking the system.
 
 After a while, Windows will remind us that the system is unprotected. When it does, right click the notification and hide it.
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_1.jpg)
@@ -88,6 +90,7 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /v "EnableWebCo
 reg add "HKLM\SOFTWARE\Policies\Microsoft\PushToInstall" /v DisablePushToInstall /t REG_DWORD /d 1 /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
 sc delete PushToInstall
+sc delete InstallService
 ```
 
 ### Music, TV, ...
@@ -207,6 +210,8 @@ Get-AppxPackage -AllUsers *holo* | Remove-AppxPackage
 Get-AppxPackage -AllUsers *3db* | Remove-AppxPackage
 Get-AppxPackage -AllUsers *3dv* | Remove-AppxPackage
 Get-AppxPackage -AllUsers *paint* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *mixed* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *print3d* | Remove-AppxPackage
 ```
 In the command prompt, type:
 ```
@@ -215,6 +220,8 @@ for /f "tokens=1* delims=" %I in ('reg query "HKEY_CLASSES_ROOT\SystemFileAssoci
 ```
 
 ### Microsoft Edge
+Right click the Edge icon on your taskbar and unpin it. (__Important:__ don't skip this step, or the icon will be permanently stuck there)
+
 In the command prompt, type:
 ```
 install_wim_tweak /o /c Microsoft-Windows-Internet-Browser /r
@@ -231,7 +238,7 @@ install_wim_tweak /o /c Microsoft-Windows-ContactSupport /r
 ```
 In the PowerShell, type:
 ```
-Get-AppxPackage *GetHelp* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *GetHelp* | Remove-AppxPackage
 ```
 Additionally, Go to Start > Settings > Apps > Manage optional features, and remove Contact Support (if present).
 
@@ -244,6 +251,26 @@ In the command prompt, type:
 install_wim_tweak /o /c Microsoft-PPIProjection-Package /r
 ```
 
+### Your Phone
+In the PowerShell, type:
+```
+Get-AppxPackage -AllUsers *phone* | Remove-AppxPackage
+```
+
+### Snip & Sketch
+In the PowerShell, type:
+```
+Get-AppxPackage -AllUsers *sketch* | Remove-AppxPackage
+```
+
+### Hello Face
+Go to Start > Settings > Apps > Manage optional features, and remove Hello Face.
+
+In the command prompt, type:
+```
+schtasks /Change /TN "\Microsoft\Windows\HelloFace\FODCleanupTask" /Disable
+```
+
 ### System Restore
 In the PowerShell, type:
 ```
@@ -253,6 +280,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableC
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableConfig" /t "REG_DWORD" /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "DisableSR " /t "REG_DWORD" /d "1" /f
+schtasks /Change /TN "\Microsoft\Windows\SystemRestore\SR" /disable
 ```
 
 ### Reboot!
@@ -349,7 +377,6 @@ sc delete OneSyncSvc
 sc delete MessagingService
 sc delete wercplsupport
 sc delete PcaSvc
-sc delete InstallService
 sc config wlidsvc start=demand
 sc delete wisvc
 sc delete RetailDemo
@@ -363,6 +390,7 @@ for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k 
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "UnistoreSvc" ^| find /i "UnistoreSvc"') do (reg delete %I /f)
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "BcastDVRUserService" ^| find /i "BcastDVRUserService"') do (reg delete %I /f)
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "Sgrmbroker" ^| find /i "Sgrmbroker"') do (reg delete %I /f)
+for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "ClipSVC" ^| find /i "ClipSVC"') do (reg delete %I /f)
 sc delete diagnosticshub.standardcollector.service
 reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules" /v "NumberOfSIUFInPeriod" /t REG_DWORD /d 0 /f
 reg delete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules" /v "PeriodInNanoSeconds" /f
@@ -441,10 +469,15 @@ Go to Start > Settings > Personalization:
 Go back to Settings and go to System > Notifications and actions:
 * Set Get tips, tricks, and suggestions as you use Windows to off
 * Set Show me the Windows welcome... to off
+
+Go back to Settings and go to System > Multitasking:
+* Set Show suggestions occasionally in your timeline to off
  
 Go back to Settings and go to Privacy:
 * Under General, turn off everything
 * Under Activity history, turn off everything
+* Under Speech, turn off everything
+* Under Inking, turn off everything
 * Under App diagnostics, set Let apps access diagnostic information to off
 
 Go back to Settings and go to Search:
@@ -453,11 +486,13 @@ Go back to Settings and go to Search:
 On the taskbar:
 * Right click the people icon and uncheck "Show People button"
 
+Later on, you might get a "Suggestions" notification. Right click it and turn it off.
+
 ## Recommended: use a firewall!
 For some applications (such as the settings app), the only way to prevent them from reporting data is to block them with a firewall. This is why you should use a firewall to block all traffic except the applications you explicitly allow, like your web browser.
 Personally, I allow Windows Update, Network discovery and sharing, DHCP, DNS, my web browser and nothing more.
 ### Option 1: TinyWall
-[TinyWall](http://tinywall.pados.hu/) is my favorite, but the installer no longer works on Windows 10 1803 because of an issue with digital signatures. I'm sure the author will fix this soon, but in the meanwhile, I made a [modified installer](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/TinyWall-2.1-1803.exe) without the problematic signature.  
+[TinyWall](http://tinywall.pados.hu/) is my favorite, but the installer no longer works since Windows 10 1803 because of an issue with digital signatures. I'm sure the author will fix this soon, but in the meanwhile, I made a [modified installer](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/TinyWall-2.1-1803.exe) without the problematic signature.  
 Setting up the firewall may take some time, but you'll be as safe as you could possibly be when using Windows. Tinywall's autolearn feature is very useful when you install a new application: it will learn its patterns and allow them through the firewall.  
 A big limitation of Tinywall, if you decide to use it, is that you cannot allow/block individual UWP apps (for instance, allow Facebook but not Candy Crush). Blocking C:\Windows\System32\WWAHost.exe (recommended) will block all of them, while allowing it will allow all of them to go through.  
 Microsoft Edge is the only exception and has its own exe files. The same thing happens if you use the UNIX subsystem, there is no way to block specific applications.
@@ -468,10 +503,7 @@ Unlike TinyWall however, this firewall can block individual UWP apps, which is a
 
 ## Congratulations! Your copy of Windows is now Debotnetted!
 Things will change in the future, and I'll do what I can to keep this guide updated.
-As of June 2018, this guide works on Windows 10 Pro.
+As of September 2018, this guide works on Windows 10 Pro.
 
 ## Can Windows revert these changes?
-There are a few things that can revert the changes we made here:
-* __Major updates__:  when a major update is installed it's like reinstalling Windows. It keeps your programs and settings but the system is reinstalled, and all the botnet with it. Major updates usually come out every 8-12 months. I will keep the guide updated every time a new major update comes out.
-* __Using ``dism /Online /Cleanup-Image /RestoreHealth``__:  if you run this command, it will revert almost all changes
-* __Using System Restore__:  if you go back to before the changes were made, it will revert changes
+When a major update is installed, almost all changes will be reverted and you'll have to repeat this procedure. Major updates come out about twice a year.
