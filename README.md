@@ -3,9 +3,17 @@
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
-Last update: November 6, 2018
+Last update: December 10, 2018
 
-__Important:__ If you decide to follow this guide, you will not be able to use your Microsoft account, or the Windows Store. These steps cannot be reverted without reinstalling Windows! Do this at your own risk.
+__Important:__ This procedure cannot be reversed without reinstalling Windows. Do not follow this guide if:
+* You are not an experienced user
+* You need to use a Microsoft Account for any reason (outside of your web browser)
+* You need to download anything from the Windows Store (including distros for the Linux subsystem if you want to use it)
+* You need to add/remove user accounts to your PC (new accounts will not work properly)
+
+You're doing this at your own risk, I am not responsible for any data loss or damage that may occur.
+
+Let's start.
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
