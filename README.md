@@ -235,9 +235,11 @@ In the command prompt, type:
 ```
 install_wim_tweak /o /c Microsoft-Windows-Internet-Browser /r
 install_wim_tweak /o /c Adobe-Flash /r
-Get-WindowsPackage -Online | Where PackageName -like *InternetExplorer* | Remove-WindowsPackage -Online -NoRestart
+```  
+In the PowerShell, type:
 ```
-
+Get-WindowsPackage -Online | Where PackageName -like *InternetExplorer* | Remove-WindowsPackage -Online -NoRestart
+```  
 __Alternatives__: [Firefox](http://www.firefox.com/"), [Chromium](http://chromium.woolyss.com/), [Iridium Browser](https://iridiumbrowser.de), [Pale Moon](https://www.palemoon.org/)
 
 ### Contact Support, Get Help
