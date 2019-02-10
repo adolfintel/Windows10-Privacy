@@ -86,7 +86,7 @@ __Note:__ if some of the apps reappear after a few minutes, it's because you did
 ### Windows Store
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *store* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *store* | Remove-AppxPackage -AllUsers
 ```
 You can ignore any error that pops up.  
 In the command prompt, type:
@@ -105,7 +105,7 @@ sc delete InstallService
 ### Music, TV, ...
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *zune* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *zune* | Remove-AppxPackage -AllUsers
 Get-WindowsPackage -Online | Where PackageName -like *MediaPlayer* | Remove-WindowsPackage -Online -NoRestart
 ```
 
@@ -114,7 +114,7 @@ __Alternatives__: [MPC-HC](https://mpc-hc.org/), [VLC](https://www.videolan.org/
 ### Xbox and Game DVR
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage -AllUsers
 ```
 You can ignore any error that pops up.  
 In the command prompt, type:
@@ -133,14 +133,14 @@ Additionally, go to Start > Settings > Gaming and turn off everything.
 ### Sticky Notes
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *sticky* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *sticky* | Remove-AppxPackage -AllUsers
 ```
 __Alternatives__: [Notebot](http://notebot.fdossena.com/)
 
 ### Maps
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *maps* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *maps* | Remove-AppxPackage -AllUsers
 ```
 In the command prompt, type:
 ```
@@ -152,16 +152,16 @@ schtasks /Change /TN "\Microsoft\Windows\Maps\MapsUpdateTask" /disable
 ### Alarms and Clock
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *alarms* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *people* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *alarms* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *people* | Remove-AppxPackage -AllUsers
 ```
 You can ignore any error that pops up.
 
 ### Mail, Calendar, ...
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *comm* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *mess* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *comm* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *mess* | Remove-AppxPackage -AllUsers
 ```
 You can ignore any error that pops up.
 
@@ -170,40 +170,40 @@ __Alternatives__: [Thunderbird](https://www.mozilla.org/thunderbird/)
 ### OneNote
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *onenote* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *onenote* | Remove-AppxPackage -AllUsers
 ```
 
 ### Photos
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *photo* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *photo* | Remove-AppxPackage -AllUsers
 ```
 __Alternatives__: [JPEGView](https://sourceforge.net/projects/jpegview/), or the old Windows Photo Viewer
 
 ### Camera
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *camera* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *camera* | Remove-AppxPackage -AllUsers
 ```
 Ignore any error that pops up
 
 ### Weather, News, ...
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *bing* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *bing* | Remove-AppxPackage -AllUsers
 ```
 
 ### Calculator
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *calc* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *calc* | Remove-AppxPackage -AllUsers
 ```
 __Alternatives__: [SpeedCrunch](http://www.speedcrunch.org/)
 
 ### Sound Recorder
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *soundrec* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *soundrec* | Remove-AppxPackage -AllUsers
 ```
 __Alternatives__: [Audacity](http://www.audacityteam.org/)
 
@@ -215,12 +215,12 @@ install_wim_tweak /o /c Microsoft-Windows-Holographic /r
 Reboot (__important__) and reopen our command prompt and PowerShell.  
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *holo* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *3db* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *3dv* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *paint* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *mixed* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *print3d* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *holo* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *3db* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *3dv* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *paint* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *mixed* | Remove-AppxPackage -AllUsers
+Get-AppxPackage -AllUsers *print3d* | Remove-AppxPackage -AllUsers
 ```
 In the command prompt, type:
 ```
@@ -249,7 +249,7 @@ install_wim_tweak /o /c Microsoft-Windows-ContactSupport /r
 ```
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *GetHelp* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *GetHelp* | Remove-AppxPackage -AllUsers
 ```
 Additionally, Go to Start > Settings > Apps > Manage optional features, and remove Contact Support (if present).
 
@@ -268,13 +268,13 @@ install_wim_tweak /o /c Microsoft-PPIProjection-Package /r
 ### Your Phone
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *phone* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *phone* | Remove-AppxPackage -AllUsers
 ```
 
 ### Snip & Sketch
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *sketch* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *sketch* | Remove-AppxPackage -AllUsers
 ```
 
 ### Hello Face
