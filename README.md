@@ -1,5 +1,5 @@
 # Windows 10 Privacy Guide - October 2018 Update
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1809.jpg)
+![data/nutella_1809.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1809.jpg)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
@@ -17,23 +17,23 @@ Let's start.
 
 ## Do not use the default settings
 At the end of the setup process, create a local account, don't use Cortana and turn off everything in the privacy settings.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_1.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_3.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_4.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_5.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_coll.jpg)
+![data/setup1809_1.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_1.jpg)
+![data/setup1809_2.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_2.jpg)
+![data/setup1809_3.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_3.jpg)
+![data/setup1809_4.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_4.jpg)
+![data/setup1809_5.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_5.jpg)
+![data/setup1809_coll.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_coll.jpg)
 If you already installed Windows with the default settings, go to Start > Settings > Privacy to turn them off. You should also go to Account and disconnect your Microsoft account because this guide will prevent it from working properly.
 
 ## Let it download all the updates
 Once you get to the desktop, go to Settings > Updates and security, and let it download all the updates. Reboot and repeat until no more updates are available.  
 This is important because Windows Update may interfere with our activities.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_1.jpg)  
+![data/updates1809_1.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_1.jpg)  
 Now open the Store app, and let it download updates too.  
 Again, this is important because updates would interfere with our activities.  
 This may take some time. 
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_2.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_3.jpg)  
+![data/updates1809_2.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_2.jpg)
+![data/updates1809_3.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_3.jpg)  
 Make sure you check for updates several times, because we absolutely don't want it to download stuff while we're removing it.
 
 Now that the system is fully updated, make sure Windows is activated with your license (or KMSPico).
@@ -44,12 +44,12 @@ What's important now is to remove all the OEM software and the shitty games like
 
 ## Tools
 * You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/install_wim_tweak.zip), extract it to your Desktop, then move it to C:\Windows\System32
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/iwt1809_extr.jpg)  
+![data/iwt1809_extr.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/iwt1809_extr.jpg)  
 This is a very handy tool that allows us to remove Windows components with a single command. You can delete it from System32 when you're finished with this guide.  
 * We need a command prompt, so click start, type ``cmd`` and run it as administrator
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/cmd1809_1.jpg)
+![data/cmd1809_1.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/cmd1809_1.jpg)
 * We will also need PowerShell, so click start, type ``PowerShell`` and run it as administrator
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/ps1809_1.jpg)
+![data/ps1809_1.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/ps1809_1.jpg)
 
 ## Removing Windows Defender
 In the command prompt, type the following commands:
@@ -75,7 +75,7 @@ This will take 1-2 minutes.
 Unfortunately, since June 2018, the Windows Security icon in the Start menu can no longer be removed without breaking the system.
 
 If Windows complains about the system being unprotected, right click the notification and hide it.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_1.jpg)
+![data/wdend1803_1.jpg](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/wdend1803_1.jpg)
 
 ## Removing features
 We will now remove almost all UWP features in Windows. The only UWP app you'll have left will be the settings app.  
@@ -431,7 +431,7 @@ Here we need to locate the following keys:
 * WdiSystemHost
   
 These keys have messed up permissions. To delete them, we must fix them, here's a video showing how to do it:  
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/delkey.gif)  
+![data/delkey.gif](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/delkey.gif)  
 Right click the key and select Permissions, then click Advanced, change the Owner to your username, check "Replace owner on subcontainers and objects" and "Replace all child object permission entries with inheritable permission entries from this object", if inheritance is enabled, disable it and convert to explicit permissions, apply, remove all the permission entries and add one for your username with Full control, confirm everything and delete the key.  
 Repeat for the 3 keys and you're done.
 
