@@ -114,9 +114,8 @@ __Alternatives__: [MPC-HC](https://mpc-hc.org/), [VLC](https://www.videolan.org/
 ### Xbox and Game DVR
 In the PowerShell, type:
 ```
-Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
+Get-AppxPackage *xbox* -AllUsers | Where-Object {$_.name -notlike "*xboxgamecallable*" } | Remove-AppxPackage
 ```
-You can ignore any error that pops up.  
 In the command prompt, type:
 ```
 sc delete XblAuthManager
