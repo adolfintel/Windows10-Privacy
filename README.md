@@ -1,11 +1,11 @@
-# Windows 10 Privacy Guide - October 2018 Update
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1809.jpg)
+# Windows 10 Privacy Guide - 1903 Update
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1903.jpg)
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
-Last update: January 28, 2019
+Last update: May 16, 2019
 
-__Important:__ This procedure cannot be reversed without reinstalling Windows. Do not follow this guide if:
+__Important:__ This procedure cannot be reverted without reinstalling Windows. Do not follow this guide if:
 * You are not an experienced user
 * You need to use a Microsoft Account for any reason (outside of your web browser)
 * You need to download anything from the Windows Store (including distros for the Linux subsystem if you want to use it)
@@ -20,15 +20,15 @@ At the end of the setup process, create a local account, don't use Cortana and t
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_1.jpg)
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_2.jpg)
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_3.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_4.jpg)
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_5.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1903_4.jpg)
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1903_5.jpg)
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/setup1809_coll.jpg)
 If you already installed Windows with the default settings, go to Start > Settings > Privacy to turn them off. You should also go to Account and disconnect your Microsoft account because this guide will prevent it from working properly.
 
 ## Let it download all the updates
 Once you get to the desktop, go to Settings > Updates and security, and let it download all the updates. Reboot and repeat until no more updates are available.  
 This is important because Windows Update may interfere with our activities.
-![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1809_1.jpg)  
+![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/updates1903_1.jpg)  
 Now open the Store app, and let it download updates too.  
 Again, this is important because updates would interfere with our activities.  
 This may take some time. 
@@ -41,6 +41,8 @@ Now that the system is fully updated, make sure Windows is activated with your l
 ## Remove everything you can
 Open the start menu and remove all the applications. Some of them, such as Microsoft Edge, will not have an uninstall option; we'll remove them later.  
 What's important now is to remove all the OEM software and the shitty games like Candy Crush and Minecraft.
+
+If you used previous versions of Windows 10, you'll notice that this time we can remove more stuff, like Paint 3D, without resorting to tricks.
 
 ## Tools
 * You will need __Install_Wim_Tweak__. Download [this archive](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/install_wim_tweak.zip), extract it to your Desktop, then move it to C:\Windows\System32
@@ -99,7 +101,6 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /v "EnableWebCo
 reg add "HKLM\SOFTWARE\Policies\Microsoft\PushToInstall" /v DisablePushToInstall /t REG_DWORD /d 1 /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
 sc delete PushToInstall
-sc delete InstallService
 ```
 
 ### Music, TV, ...
@@ -147,6 +148,7 @@ In the command prompt, type:
 sc delete MapsBroker
 sc delete lfsvc
 schtasks /Change /TN "\Microsoft\Windows\Maps\MapsUpdateTask" /disable
+schtasks /Change /TN "\Microsoft\Windows\Maps\MapsToastTask" /disable
 ```
 
 ### Alarms and Clock
@@ -207,29 +209,8 @@ Get-AppxPackage -AllUsers *soundrec* | Remove-AppxPackage
 ```
 __Alternatives__: [Audacity](http://www.audacityteam.org/)
 
-### Paint 3D and VR features
-In the command prompt, type:
-```
-install_wim_tweak /o /c Microsoft-Windows-Holographic /r
-```
-Reboot (__important__) and reopen our command prompt and PowerShell.  
-In the PowerShell, type:
-```
-Get-AppxPackage -AllUsers *holo* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *3db* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *3dv* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *paint* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *mixed* | Remove-AppxPackage
-Get-AppxPackage -AllUsers *print3d* | Remove-AppxPackage
-```
-In the command prompt, type:
-```
-for /f "tokens=1* delims=" %I in ('reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Edit" ^| find /i "3D Edit"') do (reg delete "%I" /f )
-for /f "tokens=1* delims=" %I in ('reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Print" ^| find /i "3D Print"') do (reg delete "%I" /f )
-```
-
 ### Microsoft Edge
-Right click the Edge icon on your taskbar and unpin it. (__Important:__ don't skip this step, or the icon will be permanently stuck there)
+Right click the Edge icon on your taskbar and unpin it.
 
 In the command prompt, type:
 ```
@@ -269,12 +250,6 @@ install_wim_tweak /o /c Microsoft-PPIProjection-Package /r
 In the PowerShell, type:
 ```
 Get-AppxPackage -AllUsers *phone* | Remove-AppxPackage
-```
-
-### Snip & Sketch
-In the PowerShell, type:
-```
-Get-AppxPackage -AllUsers *sketch* | Remove-AppxPackage
 ```
 
 ### Hello Face
@@ -359,31 +334,6 @@ reg add "HKLM\Software\Policies\Microsoft\Windows\DataCollection" /v DoNotShowFe
 reg add "HKLM\Software\Policies\Microsoft\WindowsInkWorkspace" /v AllowSuggestedAppsInWindowsInkWorkspace /t REG_DWORD /d 0 /f
 ```
 
-### Removing OneDrive
-If you don't use OneDrive (and you shouldn't), you can remove it from your system with these commands, entered in the command prompt:
-```
-taskkill /F /IM onedrive.exe
-```
-If you're on 32-bit Windows, type
-```
-"%SYSTEMROOT%\System32\OneDriveSetup.exe" /uninstall
-```
-If you're on 64-bit Windows, type
-```
-"%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe" /uninstall
-```
-In the command prompt type:
-```
-rd "%USERPROFILE%\OneDrive" /Q /S
-rd "C:\OneDriveTemp" /Q /S
-rd "%LOCALAPPDATA%\Microsoft\OneDrive" /Q /S
-rd "%PROGRAMDATA%\Microsoft OneDrive" /Q /S
-reg delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
-reg delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
-del /Q /F "%localappdata%\Microsoft\OneDrive\OneDriveStandaloneUpdater.exe" 
-```
-Don't worry if some of these commands fail, it is normal if you never used OneDrive.  
-
 ## Removing Telemetry and other unnecessary services
 In the command prompt type the following commands:
 ```
@@ -399,6 +349,10 @@ sc delete wisvc
 sc delete RetailDemo
 sc delete diagsvc
 sc delete shpamsvc 
+sc delete TermService
+sc delete UmRdpService
+sc delete SessionEnv
+sc delete TroubleshootingSvc
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "wscsvc" ^| find /i "wscsvc"') do (reg delete %I /f)
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "OneSyncSvc" ^| find /i "OneSyncSvc"') do (reg delete %I /f)
 for /f "tokens=1" %I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "MessagingService" ^| find /i "MessagingService"') do (reg delete %I /f)
@@ -421,6 +375,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableSmartScreen"
 reg add "HKCU\Software\Microsoft\Internet Explorer\PhishingFilter" /v "EnabledV9" /t REG_DWORD /d 0 /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\CompatTelRunner.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DeviceCensus.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 ```
 Note: since version 1803, the Task View feature depends on CDPUserSvc and its other services. They can no longer be removed without breaking this feature.
 
@@ -472,6 +427,9 @@ schtasks /Change /TN "\Microsoft\Windows\Shell\FamilySafetyMonitorToastTask" /di
 schtasks /Change /TN "\Microsoft\Windows\Shell\FamilySafetyRefreshTask" /disable
 schtasks /Change /TN "\Microsoft\Windows\Subscription\EnableLicenseAcquisition" /disable
 schtasks /Change /TN "\Microsoft\Windows\Subscription\LicenseAcquisition" /disable
+schtasks /Change /TN "\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner" /disable
+schtasks /Change /TN "\Microsoft\Windows\Diagnosis\Scheduled" /disable
+schtasks /Change /TN "\Microsoft\Windows\NetTrace\GatherNetworkInfo" /disable
 del /F /Q "C:\Windows\System32\Tasks\Microsoft\Windows\SettingSync\*" 
 ```
 Some of these may not exist, it's fine.
@@ -479,16 +437,19 @@ Some of these may not exist, it's fine.
 ## Last touches
 We must disable Windows Spotlight, and other "Suggestions" (literal ads).
 
-Go to Start > Settings > Personalization: 
-* Under Lock screen and set the background to Picture
-* Under Start set Show suggestions occasionally in Start to off (They're literally ads)
+Go to Start > Settings > Personalization > Lock screen: 
+* Set the background to Picture
+* Set "Get fun facts, tips, tricks and more on your lock screen" to off
+
+Go to Personalization > Start:
+* Set Show suggestions occasionally in Start to off (They're literally ads)
 
 Go back to Settings and go to System > Notifications and actions:
-* Set Get tips, tricks, and suggestions as you use Windows to off
-* Set Show me the Windows welcome... to off
+* Set "Get tips, tricks, and suggestions as you use Windows" to off
+* Set "Show me the Windows welcome..." to off
 
-Go back to Settings and go to System > Multitasking:
-* Set Show suggestions occasionally in your timeline to off
+Go to System > Multitasking:
+* Set "Show suggestions occasionally in your timeline" to off
  
 Go back to Settings and go to Privacy:
 * Under General, turn off everything
@@ -500,27 +461,29 @@ Go back to Settings and go to Privacy:
 Go back to Settings and go to Search:
 * Under Permissions & History, turn off everything
 
-On the taskbar:
-* Right click the people icon and uncheck "Show People button"
-
 Later on, you might get a "Suggestions" notification. Right click it and turn it off.
 
-## Recommended: use a firewall!
+## Use a firewall!
 For some applications (such as the settings app), the only way to prevent them from reporting data is to block them with a firewall. This is why you should use a firewall to block all traffic except the applications you explicitly allow, like your web browser.
 Personally, I allow Windows Update, Network discovery and sharing, DHCP, DNS, my web browser and nothing more.
-### Option 1: TinyWall
-[TinyWall](http://tinywall.pados.hu/) is my favorite, but the installer no longer works since Windows 10 1803 because of an issue with digital signatures. I'm sure the author will fix this soon, but in the meanwhile, I made a [modified installer](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/TinyWall-2.1-1803.exe) without the problematic signature.  
-Setting up the firewall may take some time, but you'll be as safe as you could possibly be when using Windows. Tinywall's autolearn feature is very useful when you install a new application: it will learn its patterns and allow them through the firewall.  
-A big limitation of Tinywall, if you decide to use it, is that you cannot allow/block individual UWP apps (for instance, allow Facebook but not Candy Crush). Blocking C:\Windows\System32\WWAHost.exe (recommended) will block all of them, while allowing it will allow all of them to go through.  
-Microsoft Edge is the only exception and has its own exe files. The same thing happens if you use the UNIX subsystem, there is no way to block specific applications.
 
-### Option 2: SimpleWall
-[SimpleWall](https://www.henrypp.org/product/simplewall) works pretty much in the same way that TinyWall does but the UI is a bit more basic, it doesn't have the autolearn feature of TinyWall, and exe files must be added one by one for apps like Steam or git that have many executables.  
-Unlike TinyWall however, this firewall can block individual UWP apps, which is a nice feature. 
+[SimpleWall](https://www.henrypp.org/product/simplewall) is the new recommended firewall for this guide. If you used TinyWall before, it no longer works on 1903, so uninstall it.  
+SimpleWall can block/unblock individual executables, UWP apps, and services, as well as filter by address, port and protocol.  
+Unlike TinyWall unfortunately, it doesn't have an autolearn mode, but it has a very useful notification that pops up when an application is blocked, so you can decide if you want to block it or allow it permanently. This is very useful when installing new software. Get used to seeing a lot of these in the first hours.  
+My recommended configuration for SimpleWall is this:
+* Under Settings > Mode, use Whitelist. This will block all traffic that you don't explicitly allow
+* Under Settings > Settings > General, enable "Load on system startup", "Start minimized", and "Skip User Account Control prompt"
+* Under Settings > Settings > Rules, select "Enable boot-time filters"
+* Under Settings > Settings > Rules > System Rules, allow smb (inbound and outbound), if you plan to use network file sharing, and also Windows Update
+* Under File > Import, you can load my preset: [download](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/simplewall_config.zip). It blocks some Windows features that aren't already blocked by the guide, and allows all apps to access the local network but not the Internet.
+* Click on Enable filtering, then select Whitelist
+
+Feel free to experiment with SimpleWall, it is a very powerful tool.  
+The only disadvantage at the moment is that it blocks Windows Update even if you explicitly allow it. The developer is aware of this issue and it will probably be fixed in later releases. A temporary workaround is available [here](https://github.com/henrypp/simplewall/issues/206#issuecomment-439830634).
 
 ## Congratulations! Your copy of Windows is now Debotnetted!
 Things will change in the future, and I'll do what I can to keep this guide updated.
-As of September 2018, this guide works on Windows 10 Pro.
+As of May 2018, this guide works on Windows 10 Pro.
 
 ## Can Windows revert these changes?
 When a major update is installed, almost all changes will be reverted and you'll have to repeat this procedure. Major updates come out about twice a year.
