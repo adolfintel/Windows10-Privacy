@@ -3,7 +3,7 @@
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
-Last update: May 16, 2019
+Last update: May 22, 2019
 
 __Important:__ This procedure cannot be reverted without reinstalling Windows. Do not follow this guide if:
 * You are not an experienced user
@@ -261,6 +261,13 @@ Get-WindowsPackage -Online | Where PackageName -like *Hello-Face* | Remove-Windo
 In the command prompt, type:
 ```
 schtasks /Change /TN "\Microsoft\Windows\HelloFace\FODCleanupTask" /Disable
+```
+
+### Edit with 3D Paint / 3D Print
+It is now possible to remove 3D Paint and 3D Print, but they forgot to remove the option in the context menu when you remove them. To remove it, run this in the command prompt:
+```
+for /f "tokens=1* delims=" %I in (' reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Edit" ^| find /i "3D Edit" ') do (reg delete "%I" /f )
+for /f "tokens=1* delims=" %I in (' reg query "HKEY_CLASSES_ROOT\SystemFileAssociations" /s /k /f "3D Print" ^| find /i "3D Print" ') do (reg delete "%I" /f )
 ```
 
 ### System Restore
