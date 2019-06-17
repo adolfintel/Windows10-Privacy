@@ -3,7 +3,7 @@
 
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
-Last update: June 6, 2019
+Last update: June 17, 2019
 
 __Important:__ This procedure cannot be reverted without reinstalling Windows. Do not follow this guide if:
 * You are not an experienced user
@@ -64,7 +64,6 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v SpyNetRepo
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v SubmitSamplesConsent /t REG_DWORD /d 2 /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v DontReportInfectionInformation /t REG_DWORD /d 1 /f
 reg delete "HKLM\SYSTEM\CurrentControlSet\Services\Sense" /f
-reg delete "HKLM\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
@@ -72,6 +71,7 @@ reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupAppro
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\SecHealthUI.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 install_wim_tweak /o /c Windows-Defender /r
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /v "Enabled" /t REG_DWORD /d 0 /f
+reg delete "HKLM\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /f
 ```
 This will take 1-2 minutes.  
 Unfortunately, since June 2018, the Windows Security icon in the Start menu can no longer be removed without breaking the system.
@@ -210,15 +210,19 @@ Get-AppxPackage -AllUsers *soundrec* | Remove-AppxPackage
 __Alternatives__: [Audacity](http://www.audacityteam.org/)
 
 ### Microsoft Edge
+Since May 2019, Edge can no longer be fully removed without breaking Windows Update. We can neutralize it, but the icon will still be there in the start menu.
+
 Right click the Edge icon on your taskbar and unpin it.
 
-In the command prompt, type:
-```
-install_wim_tweak /o /c Microsoft-Windows-Internet-Browser /r
-install_wim_tweak /o /c Adobe-Flash /r
-```  
 In the PowerShell, type:
 ```
+taskkill /F /IM browser_broker.exe
+taskkill /F /IM RuntimeBroker.exe
+taskkill /F /IM MicrosoftEdge.exe
+taskkill /F /IM MicrosoftEdgeCP.exe
+taskkill /F /IM MicrosoftEdgeSH.exe
+mv C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe_BAK
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MicrosoftEdge.exe" /v Debugger /t REG_SZ /d "%windir%\System32\taskkill.exe" /f
 Get-WindowsPackage -Online | Where PackageName -like *InternetExplorer* | Remove-WindowsPackage -Online -NoRestart
 ```  
 __Alternatives__: [Firefox](http://www.firefox.com/"), [Chromium](http://chromium.woolyss.com/), [Iridium Browser](https://iridiumbrowser.de), [Pale Moon](https://www.palemoon.org/)
