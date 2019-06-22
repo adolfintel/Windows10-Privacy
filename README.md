@@ -1,6 +1,9 @@
 # Windows 10 Privacy Guide - 1903 Update
 ![](https://raw.githubusercontent.com/adolfintel/Windows10-Privacy/master/data/nutella_1903.jpg)
 
+## Important: Maintainer needed!
+I am switching to Linux as my main OS and 1903 will be the last update for this guide from me. <a href="https://github.com/adolfintel/Windows10-Privacy/issues/45">Want to pick up the project?</a>
+
 ## Introduction
 Windows 10 has raised several concerns about privacy due to the fact that it has a lot of telemetry and online features. In response to these concerns, Microsoft released [a document explaining exactly what data they collect](https://technet.microsoft.com/itpro/windows/configure/windows-diagnostic-data), and now Windows 10 even has a [Diagnostic Data Viewer](https://www.microsoft.com/en-us/store/p/diagnostic-data-viewer/9n8wtrrsq8f7). Most of it seems pretty legit stuff when telemetry is set to basic, but still, if you don't trust them, here's how to prevent Windows 10 from sending your data to Microsoft.  
 Last update: June 17, 2019
